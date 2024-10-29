@@ -38,12 +38,15 @@ cd ../fe
 npm install
 ```
 
-### Configuration database 
+### Setup environment variables
 Set up the environment variables for the backend
 
 In the backend directory, create a file named .env and add the following line, replacing ***your-mongodb-uri*** with your actual MongoDB connection string:
 
 ```
+FE_PORT='3000'
+BE_PORT='3001'
+
 DATABASE_URL=<your-mongodb-uri>
 ```
 
