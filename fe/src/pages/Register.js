@@ -1,20 +1,28 @@
 // src/pages/Register.js
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import '../public/Register.css'; // Thêm file CSS tùy chỉnh
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
 
-    // Kiểm tra email hợp lệ
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       setError('Please enter a valid email address.');
+      return;
+    }
+
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters.');
       return;
     }
 
@@ -34,35 +42,62 @@ const Register = () => {
   };
 
   return (
-    <div className="container mt-5">
-      <h2 className="text-center mb-4">Register</h2>
-      <form onSubmit={handleRegister} className="col-md-6 offset-md-3">
-        <div className="form-group mb-3">
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            className="form-control"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div className="form-group mb-3">
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            className="form-control"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit" className="btn btn-primary w-100">Register</button>
-      </form>
-      {message && <div className="alert alert-success mt-3">{message}</div>}
-      {error && <div className="alert alert-danger mt-3">{error}</div>}
+    <div className="d-flex justify-content-center align-items-center vh-100">
+      <div className="card register-card shadow-lg p-4">
+        <h2 className="card-title text-center mb-4">Sign up</h2>
+        <form onSubmit={handleRegister}>
+          <div className="form-group mb-3">
+            <label htmlFor="email">
+              Email <span className="text-danger">*</span>
+            </label>
+            <input
+              type="email"
+              placeholder="Enter your email"
+              className={`form-control ${error && !email ? 'is-invalid' : ''}`}
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            {error && !email && (
+              <div className="invalid-feedback">Please enter a valid email address.</div>
+            )}
+          </div>
+          <div className="form-group mb-3">
+            <label htmlFor="password">
+              Password <span className="text-danger">*</span>
+            </label>
+            <input
+              type="password"
+              placeholder="Enter your password"
+              className={`form-control ${error && password.length < 6 ? 'is-invalid' : ''}`}
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            {error && password.length < 6 && (
+              <div className="invalid-feedback">Password must be at least 6 characters.</div>
+            )}
+          </div>
+          <div style={{ borderTop: 'none' }} className="card-footer d-flex justify-content-center p-0">
+            <button type="submit" className="btn sign-up-btn btn-success w-100">Sign up</button>
+          </div>
+          <div className='have-acc mt-10 d-flex justify-content-center' style={{ fontSize: '14px' }}>
+            <span>Already have an account? <a className='text-primary' style={{cursor:'pointer',textDecoration:'none'}} onClick={() => navigate('/login')}>Sign in</a></span>
+          </div>
+        </form>
+        {message && <div className="alert alert-success mt-3">{message}</div>}
+        {error && <div className="alert alert-danger mt-3">{error}</div>}
+        {message && (
+          <button
+            className="btn btn-primary w-100 mt-2"
+            onClick={() => navigate('/login')}
+          >
+            Go to Login
+          </button>
+        )}
+      </div>
     </div>
   );
 };
