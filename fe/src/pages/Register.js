@@ -28,7 +28,7 @@ const Register = () => {
 
     setError('');
     try {
-      const response = await axios.post('http://localhost:3001/user/register', {
+      const response = await axios.post('https://awp-hcmus-ia03.onrender.com/user/register', {
         email,
         password,
       });

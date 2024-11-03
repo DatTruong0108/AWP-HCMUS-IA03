@@ -26,7 +26,7 @@ const Login = ({ setIsAuthenticated }) => {
 
     setError('');
     try {
-      const response = await axios.post('http://localhost:3001/user/login', { email, password });
+      const response = await axios.post('https://awp-hcmus-ia03.onrender.com/user/login', { email, password });
       if (response.status === 200 || response.status === 201) {
         console.log('login success  ', response.data);
         localStorage.setItem('isAuthenticated', 'true');
