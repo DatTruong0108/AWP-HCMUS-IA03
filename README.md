@@ -39,6 +39,7 @@ npm install
 ```
 
 ### Setup environment variables
+Database used: MongoDB
 Set up the environment variables for the backend
 
 In the backend directory, create a file named .env and add the following line, replacing ***your-mongodb-uri*** with your actual MongoDB connection string:
@@ -64,7 +65,8 @@ npm start
 The frontend should now be running on [http://localhost:3000](http://localhost:3000)
 
 ### Public host deployment:
-Public host: ?
+Front-end server: https://awp-hcmus-ia-03.vercel.app/
+Back-end server: https://awp-hcmus-ia03.onrender.com
 
 ### Requirements
 <table className="table table-bordered mt-3">
@@ -111,13 +113,13 @@ Public host: ?
       <td>Public Host Deployment</td>
       <td>Deployment</td>
       <td>1</td>
-      <td>&#10006;</td>
+      <td>&#10004;</td>
     </tr>
   </tbody>
   <tfoot>
     <tr>
       <th colSpan="2">Total</th>
-      <th>9</th>
+      <th>10</th>
     </tr>
   </tfoot>
 </table>
