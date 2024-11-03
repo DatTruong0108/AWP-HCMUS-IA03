@@ -13,7 +13,8 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors({
-    origin: `https://awp-hcmus-ia-03.vercel.app/register`,
+    origin: `https://awp-hcmus-ia-03.vercel.app`,
+    credentials: true,
   });
   await app.listen(process.env.BE_PORT ?? 3001);
 }
