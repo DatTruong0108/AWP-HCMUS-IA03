@@ -29,10 +29,11 @@ const Register = () => {
 
     setError('');
     try {
-      const response = await axios.post('https://awp-hcmus-ia03.onrender.com/auth/register', {
+      const response = await axios.post('https://awp-hcmus-ia03.onrender.com/user/register', {
         email,
         password,
       });
+            
       if (response.status === 200 || response.status === 201) {
         setMessage(response.data.message);
         login(response.data.accessToken);
