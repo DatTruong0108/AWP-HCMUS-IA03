@@ -34,25 +34,19 @@ export class UserService {
 
   async login(loginDto: LoginDto): Promise<{ accessToken: string; user: { email: string } }> {
     const { email, password } = loginDto;
-  
-    console.log('Login attempt with email:', email);
     
     const user = await this.userModel.findOne({ email });
     if (!user) {
-      console.log('User not found');
       throw new UnauthorizedException('Invalid email or password');
     }
   
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      console.log('Invalid password');
       throw new UnauthorizedException('Invalid email or password');
     }
   
     const payload = { userId: user._id, email: user.email };
     const accessToken = this.jwtService.sign(payload);
-  
-    console.log('Login successful for user:', user.email);
   
     return { accessToken, user: { email: user.email } };
   }

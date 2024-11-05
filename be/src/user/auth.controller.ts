@@ -6,7 +6,7 @@ import { JwtAuthGuard } from './jwt-auth.guard';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) { }
 
   @Post('login')
   async login(@Body() loginDto: LoginDto): Promise<{ accessToken: string; user: { email: string } }> {
@@ -21,7 +21,7 @@ export class AuthController {
   @Get('profile')
   async getProfile(@Request() req): Promise<{ email: string; createdAt: Date }> {
     try {
-      return this.userService.getUserProfile(req.user.userId);
+      return this.userService.getUserProfile(req.user.email);
     } catch (error) {
       throw new ForbiddenException('Access denied or token expired');
     }
