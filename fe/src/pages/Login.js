@@ -31,8 +31,14 @@ const Login = () => {
       const response = await axios.post('https://awp-hcmus-ia03.onrender.com/auth/login', { email, password });
       if (response.status === 200 || response.status === 201) {
         console.log('Login successful', response.data);
-        login(response.data.accessToken);
-        navigate('/profile');
+        const { accessToken } = response.data;
+        if (accessToken) {
+          localStorage.setItem('token', accessToken);
+          login(accessToken);
+          navigate('/profile');
+        } else {
+          setError('Failed to retrieve token. Please try again.');
+        }
       }
     } catch (error) {
       setError(error.response?.data?.message || 'Invalid email or password. Please try again.');
