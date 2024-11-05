@@ -13,7 +13,10 @@ export class AuthController {
     try {
       return await this.userService.login(loginDto);
     } catch (error) {
-      throw new UnauthorizedException('Invalid login credentials');
+      if (error.message === 'Invalid email or password') {
+        throw new UnauthorizedException('Invalid login credentials');
+      }
+      throw new UnauthorizedException('An unexpected error occurred. Please try again.');
     }
   }
 
@@ -21,7 +24,7 @@ export class AuthController {
   @Get('profile')
   async getProfile(@Request() req): Promise<{ email: string; createdAt: Date }> {
     try {
-      return this.userService.getUserProfile(req.user.email);
+      return this.userService.getUserProfile(req.user.userId);
     } catch (error) {
       throw new ForbiddenException('Access denied or token expired');
     }
