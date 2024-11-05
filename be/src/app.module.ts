@@ -5,7 +5,7 @@ import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({ isGlobal: true}),
     MongooseModule.forRoot(process.env.DATABASE_URL),
     UserModule,
   ],
