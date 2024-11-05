@@ -35,7 +35,9 @@ export class UserService {
   async login(loginDto: LoginDto): Promise<{ accessToken: string; user: { email: string } }> {
     const { email, password } = loginDto;
     
-    const user = await this.userModel.findOne({ email });
+    const normalizedEmail = email.trim().toLowerCase();
+    const user = await this.userModel.findOne({ email: normalizedEmail });
+
     if (!user) {
       throw new UnauthorizedException('Invalid email or password');
     }
