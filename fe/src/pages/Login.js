@@ -1,13 +1,15 @@
 // src/pages/Login.js
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../public/Register.css'; // Để dùng lại CSS của Register
+import { AuthContext } from '../state/AuthContext';
 
-const Login = ({ setIsAuthenticated }) => {
+const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -26,15 +28,14 @@ const Login = ({ setIsAuthenticated }) => {
 
     setError('');
     try {
-      const response = await axios.post('https://awp-hcmus-ia03.onrender.com/user/login', { email, password });
+      const response = await axios.post('https://awp-hcmus-ia03.onrender.com/auth/login', { email, password });
       if (response.status === 200 || response.status === 201) {
-        console.log('login success  ', response.data);
-        localStorage.setItem('isAuthenticated', 'true');
-        setIsAuthenticated(true);
-        navigate('/home');
+        console.log('Login successful', response.data);
+        login(response.data.accessToken);
+        navigate('/profile');
       }
     } catch (error) {
-      setError(error.response?.data?.message || 'An error occurred');
+      setError(error.response?.data?.message || 'Invalid email or password. Please try again.');
     }
   };
 

@@ -1,15 +1,16 @@
-// src/pages/Register.js
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../public/Register.css'; // Thêm file CSS tùy chỉnh
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { AuthContext } from '../state/AuthContext';
 
 const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+  const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
@@ -28,19 +29,22 @@ const Register = () => {
 
     setError('');
     try {
-      const response = await axios.post('https://awp-hcmus-ia03.onrender.com/user/register', {
+      const response = await axios.post('https://awp-hcmus-ia03.onrender.com/auth/register', {
         email,
         password,
       });
-      setMessage(response.data.message);
-      setEmail('');
-      setPassword('');
+      if (response.status === 200 || response.status === 201) {
+        setMessage(response.data.message);
+        login(response.data.accessToken);
+        setEmail('');
+        setPassword('');
+        navigate('/profile');
+      }
     } catch (error) {
       setMessage('');
-      setError(error.response?.data?.message || 'An error occurred');
+      setError(error.response?.data?.message || 'Registration failed. Please try again.');
     }
   };
-
   return (
     <div className="d-flex justify-content-center align-items-center vh-100">
       <div className="card register-card shadow-lg p-4">
@@ -89,14 +93,6 @@ const Register = () => {
         </form>
         {message && <div className="alert alert-success mt-3">{message}</div>}
         {error && <div className="alert alert-danger mt-3">{error}</div>}
-        {message && (
-          <button
-            className="btn btn-primary w-100 mt-2"
-            onClick={() => navigate('/login')}
-          >
-            Go to Login
-          </button>
-        )}
       </div>
     </div>
   );

@@ -32,7 +32,7 @@ export class UserService {
     }
   }
 
-  async login(loginDto: LoginDto): Promise<{ accessToken: string }> {
+  async login(loginDto: LoginDto): Promise<{ accessToken: string; user: { email: string } }> {
     const { email, password } = loginDto;
 
     const user = await this.userModel.findOne({ email });
@@ -41,9 +41,15 @@ export class UserService {
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) throw new UnauthorizedException('Invalid email or password');
 
-    const payload = { userId: user._id };
+    const payload = { userId: user._id, email: user.email };
     const accessToken = this.jwtService.sign(payload);
 
-    return { accessToken };
+    return { accessToken, user: { email: user.email } };
+  }
+
+  async getUserProfile(userId: string): Promise<{ email: string; createdAt: Date }> {
+    const user = await this.userModel.findById(userId).select('email createdAt');
+    if (!user) throw new UnauthorizedException('User not found');
+    return { email: user.email, createdAt: user.createdAt };
   }
 }

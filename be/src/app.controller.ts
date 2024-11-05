@@ -12,13 +12,4 @@ export class AppController {
   }
 }
 
-// @Module({
-//   imports: [
-//     ConfigModule.forRoot({
-//       isGlobal: true,
-//     }),
-//     UserModule
-//   ]
-// })
-
 export class AppModule {}
