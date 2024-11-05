@@ -1,16 +1,15 @@
-import React, { useState, useContext } from 'react';
+// src/pages/Register.js
+import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../public/Register.css'; // Thêm file CSS tùy chỉnh
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { AuthContext } from '../state/AuthContext';
 
 const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
-  const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
@@ -35,11 +34,10 @@ const Register = () => {
       });
             
       if (response.status === 200 || response.status === 201) {
-        setMessage(response.data.message);
-        login(response.data.accessToken);
+        setMessage('Registration successful! You can now log in.');
         setEmail('');
         setPassword('');
-        navigate('/profile');
+        navigate('/login');
       }
     } catch (error) {
       setMessage('');
