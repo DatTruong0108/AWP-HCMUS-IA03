@@ -1,4 +1,3 @@
-// src/pages/Login.js
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -33,7 +32,7 @@ const Login = () => {
         console.log('Login successful', response.data);
         const { accessToken } = response.data;
         if (accessToken) {
-          localStorage.setItem('token', accessToken);
+          // localStorage.setItem('token', accessToken);
           login(accessToken);
           navigate('/profile');
         } else {

@@ -2,14 +2,15 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import '../public/Register.css'; // Thêm file CSS tùy chỉnh
+import '../public/Register.css'; 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+  const [message, setMessage] = useState('');
+  const [showLoginButton, setShowLoginButton] = useState(false);
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
@@ -32,18 +33,23 @@ const Register = () => {
         email,
         password,
       });
-            
+
       if (response.status === 200 || response.status === 201) {
-        setMessage('Registration successful! You can now log in.');
+        setMessage('Registration successful! You can now log in by clicking the button below.');
+        setShowLoginButton(true);
         setEmail('');
         setPassword('');
-        navigate('/login');
       }
     } catch (error) {
       setMessage('');
       setError(error.response?.data?.message || 'Registration failed. Please try again.');
     }
   };
+
+  const handleNavigateToLogin = () => {
+    navigate('/login');
+  };
+
   return (
     <div className="d-flex justify-content-center align-items-center vh-100">
       <div className="card register-card shadow-lg p-4">
@@ -87,11 +93,14 @@ const Register = () => {
             <button type="submit" className="btn sign-up-btn btn-success w-100">Sign up</button>
           </div>
           <div className='have-acc mt-10 d-flex justify-content-center' style={{ fontSize: '14px' }}>
-            <span>Already have an account? <a className='text-primary' style={{cursor:'pointer',textDecoration:'none'}} onClick={() => navigate('/login')}>Sign in</a></span>
+            <span>Already have an account? <a className='text-primary' style={{ cursor: 'pointer', textDecoration: 'none' }} onClick={() => navigate('/login')}>Sign in</a></span>
           </div>
         </form>
         {message && <div className="alert alert-success mt-3">{message}</div>}
         {error && <div className="alert alert-danger mt-3">{error}</div>}
+        {showLoginButton && (
+          <button onClick={handleNavigateToLogin}>Login</button>
+        )}
       </div>
     </div>
   );
