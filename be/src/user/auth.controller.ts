@@ -16,7 +16,7 @@ export class AuthController {
       if (error.message === 'Invalid email or password') {
         throw new UnauthorizedException('Invalid login credentials');
       }
-      throw new UnauthorizedException('An unexpected error occurred. Please try again.');
+      throw new UnauthorizedException('An unexpected error occurred. Please try again: ' + error.message);
     }
   }
 

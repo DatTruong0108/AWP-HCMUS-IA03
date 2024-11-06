@@ -3,15 +3,17 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../state/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
   const { logout } = useContext(AuthContext);
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     try {
       logout();
-      window.location.reload();
+      navigate('/login');
     } catch (err) {
       setError('Failed to logout. Please try again.');
     }
