@@ -5,7 +5,10 @@
 ### 21120050 - Trương Tấn Đạt
 
 
-Implement a user registration system that consists of a backend API for handling user data and a React frontend to provide a user-friendly interface for registration.
+Implement a full-stack authentication system using JWT to secure user login and registration.
+The frontend will use React to allow users to register, log in, and access protected content. The
+backend will handle user authentication, issue JWT tokens upon login, and verify tokens to
+protect specific routes.
 
 ### How to use
 #### Clone this repository 
@@ -48,7 +51,6 @@ In the backend directory, create a file named .env and add the following line, r
 FE_PORT='3000'
 BE_PORT='3001'
 
-JWT_SECRET=<your_jwt_secret_key>
 DATABASE_URL=<your-mongodb-uri>
 ```
 
@@ -66,7 +68,7 @@ npm start
 The frontend should now be running on [http://localhost:3000](http://localhost:3000)
 
 ### Public host deployment:
-Front-end server: https://awp-hcmus-ia-03.vercel.app/
+Front-end server: https://awp-hcmus-ia-03.vercel.app
 Back-end server: https://awp-hcmus-ia03.onrender.com
 
 ### Requirements
