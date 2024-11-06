@@ -60,6 +60,7 @@ const Profile = () => {
               setError('Failed to logout. Please try again.');
             }
           }}>Logout</button>
+          <button className="btn btn-primary mt-3" onClick={() => navigate('/home')}>Home</button>
         </div>
       </div>
     </div>

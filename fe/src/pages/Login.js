@@ -32,7 +32,7 @@ const Login = () => {
         console.log('Login successful', response.data);
         const { accessToken } = response.data;
         if (accessToken) {
-          // localStorage.setItem('token', accessToken);
+          localStorage.setItem('token', accessToken);
           login(accessToken);
           navigate('/profile');
         } else {
