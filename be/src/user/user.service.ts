@@ -110,7 +110,8 @@ export class UserService {
     }
   
     const payload = { userId: user._id, email: user.email };
-    const secret = this.configService.get<string>('JWT_SECRET');
+    // const secret = this.configService.get<string>('JWT_SECRET');
+    const secret = 'nAgaT0biM4ru@01082003';
     const accessToken = jwt.sign(payload, secret, { expiresIn: '1h' });
   
     return { accessToken, user: { email: user.email } };

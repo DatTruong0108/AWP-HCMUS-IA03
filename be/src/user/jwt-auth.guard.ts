@@ -46,7 +46,8 @@ export class JwtAuthGuard implements CanActivate {
       throw new UnauthorizedException('Token not found');
     }
     try {
-      const secret = this.configService.get<string>('JWT_SECRET');
+      // const secret = this.configService.get<string>('JWT_SECRET');
+      const secret = 'nAgaT0biM4ru@01082003';
       const payload = jwt.verify(token, secret);
       request['user'] = payload;
     } catch (error) {
